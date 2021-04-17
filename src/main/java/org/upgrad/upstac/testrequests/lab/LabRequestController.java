@@ -66,10 +66,10 @@ public class LabRequestController {
     @PreAuthorize("hasAnyRole('TESTER')")
     public List<TestRequest> getForTester()  {
         //Get logged-in user(tester) related details.
-        User tester=userLoggedInService.getLoggedInUser();
-
+        User loggedInUser=userLoggedInService.getLoggedInUser();
+api/
         //Return list of tests which are assigned to logged-in user(tester).
-        return testRequestQueryService.findByTester(tester);
+        return testRequestQueryService.findByTester(loggedInUser);
     }
 
 

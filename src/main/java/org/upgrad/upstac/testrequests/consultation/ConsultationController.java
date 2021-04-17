@@ -59,10 +59,10 @@ public class ConsultationController {
     public List<TestRequest> getForDoctor()  {
 
         //Get logged-in user(doctor) related details.
-        User doctor=userLoggedInService.getLoggedInUser();
+        User loggedInUser=userLoggedInService.getLoggedInUser();
 
         //Return list of tests which are assigned to logged-in user(doctor).
-        return testRequestQueryService.findByDoctor(doctor);
+        return testRequestQueryService.findByDoctor(loggedInUser);
     }
 
     //Assign test to logged in doctor & return test details.
@@ -71,10 +71,10 @@ public class ConsultationController {
     public TestRequest assignForConsultation(@PathVariable Long id) {
         try {
             //Get logged-in user(doctor) related details.
-            User doctor =userLoggedInService.getLoggedInUser();
+            User loggedInUser =userLoggedInService.getLoggedInUser();
 
             //Assign test to logged in doctor & return test details.
-            return testRequestUpdateService.assignForConsultation(id,doctor);
+            return testRequestUpdateService.assignForConsultation(id,loggedInUser);
         }catch (AppException e) {
             throw asBadRequest(e.getMessage());
         }
@@ -86,10 +86,10 @@ public class ConsultationController {
     public TestRequest updateConsultation(@PathVariable Long id,@RequestBody CreateConsultationRequest testResult) {
         try {
             //Get logged-in user(doctor) related details.
-            User doctor =userLoggedInService.getLoggedInUser();
+            User loggedInUser =userLoggedInService.getLoggedInUser();
 
             //Update consultation details & return test details.
-            return testRequestUpdateService.updateConsultation(id,testResult,doctor);
+            return testRequestUpdateService.updateConsultation(id,testResult,loggedInUser);
         } catch (ConstraintViolationException e) {
             throw asConstraintViolation(e);
         }catch (AppException e) {
