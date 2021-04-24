@@ -31,8 +31,6 @@ public class LabRequestController {
     Logger log = LoggerFactory.getLogger(LabRequestController.class);
 
 
-
-
     @Autowired
     private TestRequestUpdateService testRequestUpdateService;
 
@@ -42,23 +40,13 @@ public class LabRequestController {
     @Autowired
     private TestRequestFlowService testRequestFlowService;
 
-
-
     @Autowired
     private UserLoggedInService userLoggedInService;
-
-
 
     @GetMapping("/to-be-tested")
     @PreAuthorize("hasAnyRole('TESTER')")
     public List<TestRequest> getForTests()  {
-
-
        return testRequestQueryService.findBy(RequestStatus.INITIATED);
-
-
-
-
     }
 
     //Get all tests which are assigned to logged-in tester.
@@ -67,7 +55,6 @@ public class LabRequestController {
     public List<TestRequest> getForTester()  {
         //Get logged-in user(tester) related details.
         User loggedInUser=userLoggedInService.getLoggedInUser();
-api/
         //Return list of tests which are assigned to logged-in user(tester).
         return testRequestQueryService.findByTester(loggedInUser);
     }
@@ -76,33 +63,21 @@ api/
     @PreAuthorize("hasAnyRole('TESTER')")
     @PutMapping("/assign/{id}")
     public TestRequest assignForLabTest(@PathVariable Long id) {
-
-
-
         User tester =userLoggedInService.getLoggedInUser();
-
-      return   testRequestUpdateService.assignForLabTest(id,tester);
+        return   testRequestUpdateService.assignForLabTest(id,tester);
     }
 
     @PreAuthorize("hasAnyRole('TESTER')")
     @PutMapping("/update/{id}")
     public TestRequest updateLabTest(@PathVariable Long id,@RequestBody CreateLabResult createLabResult) {
-
         try {
-
             User tester=userLoggedInService.getLoggedInUser();
             return testRequestUpdateService.updateLabTest(id,createLabResult,tester);
-
-
         } catch (ConstraintViolationException e) {
             throw asConstraintViolation(e);
         }catch (AppException e) {
             throw asBadRequest(e.getMessage());
         }
     }
-
-
-
-
 
 }

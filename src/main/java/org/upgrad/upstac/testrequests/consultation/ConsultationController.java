@@ -42,8 +42,7 @@ public class ConsultationController {
 
     @Autowired
     private UserLoggedInService userLoggedInService;
-
-
+    
     //Get all tests which are due for consultation and not assigned to any doctor.
     @GetMapping("/in-queue")
     @PreAuthorize("hasAnyRole('DOCTOR')")

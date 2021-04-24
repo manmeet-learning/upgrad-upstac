@@ -33,7 +33,6 @@ public class TestRequestController {
     @Autowired
     private TestRequestQueryService testRequestQueryService;
 
-
     @PostMapping("/api/testrequests")
     public TestRequest createRequest(@RequestBody CreateTestRequest testRequest) {
         try {
@@ -48,22 +47,13 @@ public class TestRequestController {
 
     @GetMapping("/api/testrequests")
     public List<TestRequest> requestHistory() {
-
         User user = userLoggedInService.getLoggedInUser();
         return testRequestService.getHistoryFor(user);
-
-
     }
 
     @GetMapping("/api/testrequests/{id}")
     public Optional<TestRequest> getById(@PathVariable Long id) {
-
-
         return testRequestQueryService.getTestRequestById(id);
-
-
     }
-
-
 
 }
